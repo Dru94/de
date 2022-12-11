@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+<h2>Examinem</h2>
+
+{% block content%}
+    <h3>Tests</h3>
+    {% for t in tests%}
+        <a href="{% url 'testStart' t.title %}">
+            <p>
+                {{t.examiner.user.username}} | {{t.title}} | {{t.description}}
+            </p>
+        </a>
+    {% endfor%}
+
+{% endblock %}
+
+

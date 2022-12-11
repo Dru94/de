@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block  content %}
+    <p>created test</p>
+    <ol>
+    {% for q in questions %}
+        {%for key, value in q.items%}
+            <li>
+                <div>
+                    <h5>{{key}}</h5>
+                    {%for a in value %}
+                        <p>{{a}}</p>
+                    {%endfor%}
+                </div>
+            </li>
+        {%endfor%}
+    {%endfor%}
+    <ol/>
+{% endblock  %}
