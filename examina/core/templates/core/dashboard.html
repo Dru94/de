@@ -1,10 +1,41 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content%}
-    <h1>Dashboard</h1>
-    <a href="{% url 'createTest' %}">
-        <button  class="btn btn-primary">
-            Create Test
-        </button>
-    </a>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dashTitle">
+                    <h3>Dashboard</h3>
+                    <p>Welcome {{name}}</p>
+                </div>
+                <div class="dashTestList">
+                    <div class="dashList">
+                        <div class="list-group">
+                            {% if test|length != 0 %}
+                                {% for t in tests %}
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <p style="font-weight:bold; font-size:30px"> {{t.title}} </p>
+                                        <p> created by <span style="font-weight:bold">{{t.examiner.user.username}}</span></p>
+                                    </a>
+                                {% endfor %}
+                            {% else %}
+                                <p>You have not created any tests yet.</p>                            
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    <div class="dashCreateTest">
+                        <a href="{% url 'createTest' %}">
+                            <button  class="btn btn-primary">
+                                Create Test
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
 {% endblock %}

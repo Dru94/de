@@ -1,11 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h4>Add test</h4>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="addTestDiv">
+                    <h4>Create test</h4>
 
-    <form action="{% url 'createTest' %}" method='post'>
-        {% csrf_token %}
-        {{form.as_p}}
-        <button class='btn btn-success' type='submit'>Submit</button>
-    </form>
+                    <form action="{% url 'createTest' %}" method='post'>
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">{{form.title.label_tag}}</label>
+                            {{form.title}}
+                        </div>
+                        <div class="mb-3">
+                            <label>{{form.duration.label_tag}}</label>
+                            {{form.duration}}
+                        </div>
+                        <div class="mb-3">
+                            <label>{{form.description.label_tag}}</label>
+                            {{form.description}}
+                        </div>
+                        <button class='btn btn-success' type='submit'>add questions</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

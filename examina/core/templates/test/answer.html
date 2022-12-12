@@ -4,31 +4,42 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                {{question}}
+                <div class="answerQnDiv">
+                    <h2>{{question}}</h2>
+                </div>
+                
             </div>
             <div class="col-md-12">
-                {%for a in answers%}
-                    <p>{{a}}</p>
-                {%endfor%}
+                <div class="answersDiv">
+                    {%for a in answers%}
+                        <p>{{a}}</p>
+                    {%endfor%}
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-8">
                 <form action="{%url 'createAnswer' questionID %}" method='post'>
                     {% csrf_token %}
-                    {{ansForm}}
+                    {{ansForm.as_p}}
                     <button class="btn btn-success" type='submit'>
                         add answer
                     </button>
                 </form>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <a href="{% url 'viewTest' %}"><button class="btn btn-info">
-                    Create Test
-                </button>
-            </a>
+            <div class="col-md-4">
+                <div class="ansCreateDiv">
+                    <a href="{% url 'createQuestions' test_id%}">
+                        <button class="btn btn-success">
+                            Add Next Question
+                        </button>
+                    </a>
+                    <a href="{% url 'viewTest' %}">
+                        <button class="btn btn-info">
+                            View Test
+                        </button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

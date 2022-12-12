@@ -1,0 +1,151 @@
+.startTest{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    padding: 20px;
+    text-align: center;
+}
+.duration{
+    display: flex;
+    justify-content: center;
+}
+.startTestBtn{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+.startTestBtn button{
+    width: 200px;
+}
+.startTestCard{
+    width: 80%;
+    background-color: whitesmoke;
+}
+.regDiv{
+    padding: 10px;
+}
+.regTitle{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.dashTitle{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+.dashTestList{
+    display: flex;
+    justify-content: space-between;
+}
+.addQuestion{
+    padding: 30px;
+}
+.addQuestionCard{
+    width: 600px;
+    padding: 20px;;
+}
+.answerQnDiv{
+    height: 50px;
+    padding: 10px;
+}
+.answersDiv{
+    padding-left: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.ansCreateDiv{
+
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.viewTestTitle{
+    text-align: center;
+    width: 80%;
+    padding: 20px;
+}
+.viewTestDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+.testingDiv{
+    padding: 30px;
+}
+.testingCard{
+    width: 900px;
+    padding: 20px;
+}
+.testingDivBtn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.testingDivBtn button{
+    width: 200px;
+    
+}
+
+.scoreDiv{
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+}
+.scoreCard{
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+.scoreCardBody{
+    width: 100%;
+}
+.mark{
+    display: flex;
+    justify-content: space-around;
+}
+.markLabel{
+    width: 50%;
+}
+.markScore{
+    width: 50%;
+    display: flex;
+    justify-content: start;
+    padding-top: 2px;
+}
+.totalmarkLabel{
+    width: 50%;
+}
+.totalmarkScore{
+    width: 50%;
+    display: flex;
+    justify-content: start;
+    padding-top: 2px;
+}
+.totalmark{
+    display: flex;
+    justify-content: space-around;
+}
+.summary{
+    padding-top: 10px;
+}
+
+.loginDiv{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* background-color: coral; */
+    justify-content: center;
+    padding: 30px;
+}
+.loginCard{
+    width: 400px;
+}

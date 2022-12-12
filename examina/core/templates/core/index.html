@@ -2,14 +2,26 @@
 <h2>Examinem</h2>
 
 {% block content%}
-    <h3>Tests</h3>
-    {% for t in tests%}
-        <a href="{% url 'testStart' t.title %}">
-            <p>
-                {{t.examiner.user.username}} | {{t.title}} | {{t.description}}
-            </p>
-        </a>
-    {% endfor%}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>All Tests.</h3>
+            </div>
+            <div class="col-md-12">
+                <div class="list-group">
+                {% for t in tests%}
+                    
+                        <a href="{% url 'testStart' t.title %}" class="list-group-item list-group-item-action">
+                            <p style="font-weight:bold; font-size:30px"> {{t.title}} </p>
+                            <p> created by <span style="font-weight:bold">{{t.examiner.user.username}}</span></p>
+                        </a>
+                    
+                {% endfor%}
+                </ul>
+            </div>
+        </div>
+    </div>
+
 
 {% endblock %}
 

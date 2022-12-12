@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
+from django.contrib.auth import login, logout 
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate
+from django.contrib import messages
 from django.views.generic import CreateView
 from .forms import ExaminerRegForm, TestForm, QuestionForm, AnswerForm
 from .models import User, Examiner, Test, Question, Answer
@@ -31,10 +34,21 @@ class RegisterExaminer(CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('home')
+        return redirect('dashboard')
 
 def dashboard(request):
-    return render(request, 'core/dashboard.html')
+    testArr = []
+    examiner = Examiner.objects.get(user=request.user)
+    test = Test.objects.filter(examiner=examiner)
+    name = examiner.first_name + " " + examiner.last_name
+    
+    for t in test:
+        testArr.append(t)
+    context = {
+        'name':name,
+        'tests':testArr
+    }
+    return render(request, 'core/dashboard.html', context)
 
 
 
@@ -72,8 +86,11 @@ def createQuestionsView(request, id):
 def createAnswerView(request, id):
     qn = Question.objects.get(id=id)
     ans = Answer.objects.filter(question=qn)
+    test_id = qn.test.id
     ansArr = []
+    print("??????",test_id)
     if request.method == 'POST':
+        
         form = AnswerForm(request.POST)
         if form.is_valid:
             form.instance.question = qn
@@ -86,12 +103,12 @@ def createAnswerView(request, id):
         'ansForm': AnswerForm,
         'question':qn.question_text,
         'questionID':qn.id,
-        'answers':ansArr
+        'answers':ansArr,
+        'test_id':test_id
     }
     return render(request, 'test/answer.html', context)
 
 def viewTest(request):
-    cArr = []
     context = {
         'questions':[]
     }
@@ -100,11 +117,15 @@ def viewTest(request):
     questionsObj = Question.objects.filter(test__title=testObj.title)
     for t in questionsObj:
         answersObj = Answer.objects.filter(question__question_text=t.question_text)
+        cArr = []
         for a in answersObj:
             cArr.append(a)
         
         context['questions'].append({t:cArr})
-    
+    context["title"] = testObj.title
+    context["duration"] = testObj.duration
+    context["description"] = testObj.description
+
     return render(request, 'core/viewTest.html', context)
 
 
@@ -124,9 +145,10 @@ def testing(request,title):
     context = {
         'questions':[]
     }
-    dArr = []
+    
     questions = Question.objects.filter(test__title=title)
     for q in questions:
+        dArr = []
         answers = Answer.objects.filter(question__question_text = q.question_text)
         questionArray.append(q)
         for a in answers:
@@ -153,3 +175,30 @@ def testSubmit(request):
             'totalMark':totalMark
         }
         return render(request, 'test/score.html', context)
+    
+    
+def loginView(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                
+                messages.info(request, f"You are now logged in as {username}.")
+                return redirect("dashboard")
+            else:
+                messages.error(request,"Invalid username or password.")
+        else:
+            messages.error(request,"Invalid username or password.")
+    form = AuthenticationForm()
+    return render(request=request, template_name="auth/login.html", context={"form":form})
+
+
+def logoutView(request):
+	logout(request)
+	messages.info(request, "You have successfully logged out.") 
+	return redirect("home")

@@ -1,24 +1,44 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-    <form action="{% url 'testSubmit' %}" method="post">
-        {% csrf_token %}
-        {% for q in questions %}
-            <div class="form-group">
-                {%for key, value in q.items%}
-                    <label>{{key}}</label>
-                    <ul>
-                        {% for a in  value%}
-                            <li>
-                                <input type="checkbox" class="form-check-input" name="{{key}}" value="{{a.correct}}"/>
-                                <label>{{a.answer_text}}</label>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {%endfor%}
-                <button class="btn btn-primary" type="Submit">Submit</button>
+    <div class="container">
+        <div class="row">
+            <div class"col-md-12">
+                <div class="testingDiv">
+                    <div class="card testingCard">
+                            <form action="{% url 'testSubmit' %}" method="post">
+                                {% csrf_token %}
+                                <ol>
+                                    {% for q in questions %}
+                                        <li>
+                                        <div class="form-group">
+                                            {%for key, value in q.items%}
+                                                <label>{{key}}</label>
+                                                <ul>
+                                                    {% for a in  value%}
+                                                        <li>
+                                                            <input type="checkbox" class="form-check-input" name="{{key}}" value="{{a.correct}}"/>
+                                                            <label>{{a.answer_text}}</label>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {%endfor%}
+                                            
+                                        </div>
+                                        </li>
+                                    {% endfor %}
+                                </ol>
+                                <div class="testingDivBtn">
+                                    <button class="btn btn-primary" type="Submit">Submit</button>
+                                </div>
+                                
+                            </form>
+                        
+                    </div>
+                </div>
             </div>
-        {% endfor %}
-    </form>
+        </div>
+    </div>
 
 {% endblock  %}

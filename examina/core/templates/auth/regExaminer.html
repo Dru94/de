@@ -2,10 +2,24 @@
 
 
 {% block content %}
-    <h3>Register</h3>
-    <form action="{% url 'regExaminer' %}" method='post'>
-        {% csrf_token %}
-        {{form.as_p}}
-        <button class='btn btn-success' type="submit">Submit</button>
-    </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="regDiv">
+                    <div class="regTitle">
+                        <h3>Register</h3>
+                        <a href="{% url 'login' %}"> Already have an account ? </a>
+                    </div>
+                    <div class"card">
+                        <form action="{% url 'regExaminer' %}" method='post'>
+                            {% csrf_token %}
+                            {{form.as_p}}
+                            <button class='btn btn-success' type="submit">Submit</button>
+                        </form>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 {% endblock %}

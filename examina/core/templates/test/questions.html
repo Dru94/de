@@ -1,16 +1,22 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
         <div class="container">
-
-            <form action="{% url 'createQuestions' examinerID %}" method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    {{form}}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="addQuestion">
+                        <div class="card addQuestionCard">
+                            <form action="{% url 'createQuestions' examinerID %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{form}}
+                                </div>
+                                <button class='btn btn-primary' type='submit'>add answers</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <button class='btn btn-primary' type='submit'>Submit</button>
-            </form>
-
+            </div>
         </div>
         <br/>
         <br/>

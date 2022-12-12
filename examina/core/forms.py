@@ -5,6 +5,8 @@ from .models import User, Examiner, Test, Question, Answer
 
 class ExaminerRegForm(UserCreationForm):
     institution = forms.CharField(max_length=200, required=False)
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
     class Meta(UserCreationForm.Meta):
         model = User
 
@@ -14,6 +16,8 @@ class ExaminerRegForm(UserCreationForm):
         user.save()
         examiner = Examiner.objects.create(user=user)
         examiner.institution = self.cleaned_data['institution']
+        examiner.first_name = self.cleaned_data['first_name']
+        examiner.last_name = self.cleaned_data['last_name']
         examiner.save()
 
         return user
