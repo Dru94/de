@@ -11,7 +11,10 @@ db.sqlite3
 db.sqlite3-journal
 media
 .migrations
+<<<<<<< HEAD
 rqmnts.txt
+=======
+>>>>>>> 69a989da3ea7d15136b164d898655837e149d96a
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
 # <django-project-name>/staticfiles/
