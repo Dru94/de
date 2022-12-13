@@ -12,15 +12,15 @@
                 <div class="dashTestList">
                     <div class="dashList">
                         <div class="list-group">
-                            {% if test|length != 0 %}
+                            {% if tests|length > 0 %}
                                 {% for t in tests %}
-                                    <a href="#" class="list-group-item list-group-item-action">
+                                    <a href="{% url 'viewTest' %}" class="list-group-item list-group-item-action">
                                         <p style="font-weight:bold; font-size:30px"> {{t.title}} </p>
                                         <p> created by <span style="font-weight:bold">{{t.examiner.user.username}}</span></p>
                                     </a>
                                 {% endfor %}
                             {% else %}
-                                <p>You have not created any tests yet.</p>                            
+                                <p>You have not created any tests yet.</p>                           
                             {% endif %}
 
                         </div>

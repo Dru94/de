@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %}
+
 
 {% block  content %}
     <div class="container">
@@ -6,19 +8,33 @@
             <div class="col-md-12" >
                 <div class="viewTestDiv">
                     <div class="viewTestTitle">
-                        <h3>{{title}}</h3>
-                        </br>
-                        <p>Duration: {{duration}} mins.</p>
-                        </br>
-                        <p>{{description}}</p>
+                        <div class="testTitle">
+                            <h3>{{title}}</h3>
+                            </br>
+                            <p>Duration: {{duration}} mins.</p>
+                            </br>
+                            <p>{{description}}</p>
+                        </div>
+                        <div class="testEditDiv">
+                            <a href="{% url 'updateTest' testID %}">
+                                <i class="fa fa-pencil-square fa-2x" color="gray">
+                                </i>
+                            </a>
+                        </div>
                     </div>
-                    <div>
+                    <div class="viewTestQns">
                         <ol>
                         {% for q in questions %}
                             {%for key, value in q.items%}
                                 <li>
                                     <div>
-                                        <h5>{{key}}</h5>
+                                        <div class="editQn">
+                                            <h5>{{key}}</h5>
+                                            <a href="#">
+                                                <i class="fa fa-pencil-square fa-2x" color="gray">
+                                                </i>
+                                            </a>
+                                        </div>
                                         {%for a in value %}
                                             <p style="padding-left:30px;">{{a}}</p>
                                         {%endfor%}

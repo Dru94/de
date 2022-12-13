@@ -50,8 +50,6 @@ def dashboard(request):
     }
     return render(request, 'core/dashboard.html', context)
 
-
-
 def createTest(request):
     if request.method == 'POST':
         form = TestForm(request.POST)
@@ -65,7 +63,6 @@ def createTest(request):
         'form':TestForm
     }
     return render(request, 'test/createTest.html', context)
-
 
 def createQuestionsView(request, id):
     if request.method == 'POST':
@@ -125,9 +122,9 @@ def viewTest(request):
     context["title"] = testObj.title
     context["duration"] = testObj.duration
     context["description"] = testObj.description
+    context["testID"] = testObj.id
 
     return render(request, 'core/viewTest.html', context)
-
 
 def TestStartView(request, title):
     test = Test.objects.filter(title=title)
@@ -138,8 +135,6 @@ def TestStartView(request, title):
         context['test'] = t
 
     return render(request, 'test/testStart.html', context)
-
-
 
 def testing(request,title):
     context = {
@@ -159,7 +154,6 @@ def testing(request,title):
 
     return render(request, 'test/testing.html', context)
 
-
 def testSubmit(request):
     totalMark = len(questionArray)
     if request.method == 'POST':
@@ -175,8 +169,7 @@ def testSubmit(request):
             'totalMark':totalMark
         }
         return render(request, 'test/score.html', context)
-    
-    
+
 def loginView(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -197,8 +190,40 @@ def loginView(request):
     form = AuthenticationForm()
     return render(request=request, template_name="auth/login.html", context={"form":form})
 
-
 def logoutView(request):
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
 	return redirect("home")
+
+def updateTest(request, id):
+    test = Test.objects.get( id=id)
+    form = TestForm(instance=test)
+    if request.method == 'POST':
+        f = TestForm(request.POST, instance=test)
+        if f.is_valid():
+            f.save()
+            return redirect('viewTest')
+
+    
+    context = {
+        "form":form,
+        "testID":test.id
+    }
+    return render(request, 'test/editTest.html', context)
+
+def updateQuestion(request, id):
+    question = Question.objects.get(id=id)
+    print("<<<<<>>>>",question)
+    form = QuestionForm(instance=question)
+    if request.method == 'POST':
+        f = QuestionForm(request.POST, instance=question)
+        if f.is_valid():
+            f.save()
+            return redirect('viewTest')
+
+    
+    context = {
+        "form":form,
+        "testID":question.id
+    }
+    return render(request, 'test/editQuestion.html', context)

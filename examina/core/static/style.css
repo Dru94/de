@@ -66,14 +66,27 @@
 
 .viewTestTitle{
     text-align: center;
-    width: 80%;
+    width: 100%;
     padding: 20px;
+    display: flex;
+    border: solid 1px;
+    border-radius: 10px;
+    border-color: #6AB943;
 }
 .viewTestDiv{
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding-bottom: 50px;
+    padding-top: 20px;
+    width: 100%;
+}
+.viewTestQns{
+    padding-top: 10px;
+}
+.testTitle{
+
+    width: 80%;
 }
 .testingDiv{
     padding: 30px;
@@ -148,4 +161,9 @@
 }
 .loginCard{
     width: 400px;
+}
+.editQn{
+    display: flex;
+    justify-content: space-between;
+    width: 865px;
 }
