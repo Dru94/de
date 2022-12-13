@@ -16,5 +16,4 @@ urlpatterns = [
     path("logout", views.logoutView, name= "logout"),
     path("update/<int:id>", views.updateTest, name="updateTest"),
     path("update/<int:id>", views.updateQuestion, name="updateQuestion"),
-    # path("update/<int:id>", views.updateAnswer, name="updateAnswer"),
 ]
