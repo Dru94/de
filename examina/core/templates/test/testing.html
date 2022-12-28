@@ -5,6 +5,12 @@
     <div class="container">
         <div class="row">
             <div class"col-md-12">
+                <div class="testingtimeDiv">
+                    <p>
+                        <span style="font-weight:bold;">Start Time:</span> {{start}}
+                    </p>
+                    <p><span style="font-weight:bold;">End Time:</span> {{end}}</p>
+                </div>
                 <div class="testingDiv">
                     <div class="card testingCard">
                             <form action="{% url 'testSubmit' %}" method="post">
@@ -18,7 +24,12 @@
                                                 <ul>
                                                     {% for a in  value%}
                                                         <li>
-                                                            <input type="checkbox" class="form-check-input" name="{{key}}" value="{{a.correct}}"/>
+                                                            <input 
+                                                                type="checkbox" 
+                                                                class="form-check-input" 
+                                                                name="{{key}}" 
+                                                                value="{{a.correct}}"
+                                                            />
                                                             <label>{{a.answer_text}}</label>
                                                         </li>
                                                     {% endfor %}
@@ -40,5 +51,10 @@
             </div>
         </div>
     </div>
+    <script>
+        let mins = document.getElementById("mins").innerHTML
+        let hrs = document.getElementById("hrs").innerHTML
 
+        
+    </script>
 {% endblock  %}

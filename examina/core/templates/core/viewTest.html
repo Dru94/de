@@ -11,7 +11,7 @@
                         <div class="testTitle">
                             <h3>{{title}}</h3>
                             </br>
-                            <p>Duration: {{duration}} mins.</p>
+                            <p>Duration: {{duration}}</p>
                             </br>
                             <p>{{description}}</p>
                         </div>
@@ -19,6 +19,9 @@
                             <a href="{% url 'updateTest' testID %}">
                                 <i class="fa fa-pencil-square fa-2x" color="gray">
                                 </i>
+                            </a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#delTestModal">
+                                <i class="fa fa-trash" style="font-size:30px;"></i>
                             </a>
                         </div>
                     </div>
@@ -30,10 +33,10 @@
                                     <div>
                                         <div class="editQn">
                                             <h5>{{key}}</h5>
-                                            <a href="#">
+                                            {% comment %} <a href="#">
                                                 <i class="fa fa-pencil-square fa-2x" color="gray">
                                                 </i>
-                                            </a>
+                                            </a> {% endcomment %}
                                         </div>
                                         {%for a in value %}
                                             <p style="padding-left:30px;">{{a}}</p>
@@ -48,5 +51,37 @@
             </div>
         </div>
     </div>
+        <!-- Modal -->
+        <div 
+          class="modal fade regModal" 
+          id="delTestModal" 
+          tabindex="-1" 
+          aria-labelledby="delTextLabel" 
+          aria-hidden="true"
+          >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body regModalBody">
+                  <div class="regWord">
+                    <p>
+                        Are you sure you want to delete <span style="font-weight:bold;">{{title}}</span> ?
+                    </p>
+                  </div>
+                  <div class="regButton">
+                    <a href="{% url 'deleteTest' testID %}">
+                      <button class="btn btn-danger">
+                        Delete
+                      </button>
+                    </a>
+                    <a href="#">
+                      <button class="btn btn-primary">
+                        Cancel
+                      </button>
+                    </a>
+                  </div>
 
+              </div>
+            </div>
+          </div>
+        </div>
 {% endblock  %}

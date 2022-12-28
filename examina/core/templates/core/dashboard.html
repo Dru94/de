@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="dashTitle">
-                    <h3>Dashboard</h3>
+                    <h3 style="font-weight:bold; color:#BDB5D5;">DASHBOARD</h3>  
                     <p>Welcome {{name}}</p>
                 </div>
                 <div class="dashTestList">
@@ -16,7 +16,8 @@
                                 {% for t in tests %}
                                     <a href="{% url 'viewTest' %}" class="list-group-item list-group-item-action">
                                         <p style="font-weight:bold; font-size:30px"> {{t.title}} </p>
-                                        <p> created by <span style="font-weight:bold">{{t.examiner.user.username}}</span></p>
+                                        <p><span style="font-style:italic;">subject </span> <span style="font-weight:bold">{{t.subject}}</span></p>
+                                        <p><span style="font-style:italic;">added on </span> <span style="font-weight:bold">{{t.created}}</span></p>
                                     </a>
                                 {% endfor %}
                             {% else %}

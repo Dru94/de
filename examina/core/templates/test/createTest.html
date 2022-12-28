@@ -11,15 +11,29 @@
                         {% csrf_token %}
                         <div class="mb-3">
                             <label class="form-label">{{form.title.label_tag}}</label>
-                            {{form.title}}
+                            <div class="testTitieDiv">
+                                <input type="text" class="form-control" name="title"/>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label>{{form.duration.label_tag}}</label>
-                            {{form.duration}}
+                            <div class="timeDiv">
+                                <input class="form-control" style="" name="duration" type="time"/>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>{{form.subject.label_tag}}</label>
+                            <div class="testSubjectDiv">
+                                <input class="form-control" name="subject" type="text"/>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label>{{form.description.label_tag}}</label>
-                            {{form.description}}
+                            <div class="descDiv">
+                                <textarea class="form-control" name="description">
+
+                                </textarea>
+                            </div>
                         </div>
                         <button class='btn btn-success' type='submit'>add questions</button>
                     </form>
@@ -27,5 +41,10 @@
             </div>
         </div>
     </div>
+    <script>
+        let handleTime = () =>{
 
+        }
+
+    </script>
 {% endblock %}

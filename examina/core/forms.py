@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, Examiner, Test, Question, Answer
+from .models import User, Examiner, Test, Question, Answer, Student
 
 
 class ExaminerRegForm(UserCreationForm):
@@ -13,6 +13,7 @@ class ExaminerRegForm(UserCreationForm):
     def save(self):
         user = super().save(commit=False)
         user.is_examiner = True
+        user.is_student = False
         user.save()
         examiner = Examiner.objects.create(user=user)
         examiner.institution = self.cleaned_data['institution']
@@ -21,12 +22,31 @@ class ExaminerRegForm(UserCreationForm):
         examiner.save()
 
         return user
+
+    
+class studentRegForm(UserCreationForm):
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+    class Meta(UserCreationForm.Meta):
+        model = User
+
+    def save(self):
+        user = super().save(commit=False)
+        user.is_student = True
+        user.is_examined = False
+        user.save()
+        student = Student.objects.create(user=user)
+        student.first_name = self.cleaned_data['first_name']
+        student.last_name = self.cleaned_data['last_name']
+        student.save()
+
+        return user
     
 
 class TestForm(forms.ModelForm):
     class Meta:
         model=Test
-        fields = ['description', 'duration', 'title']
+        fields = ['description', 'duration', 'title', 'subject']
 
 class QuestionForm(forms.ModelForm):
     class Meta:

@@ -1,15 +1,30 @@
 from django.shortcuts import render, redirect
+from datetime import datetime, timedelta
 from django.contrib.auth import login, logout 
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.views.generic import CreateView
-from .forms import ExaminerRegForm, TestForm, QuestionForm, AnswerForm
+from django.views.generic.edit import DeleteView
+from .forms import ExaminerRegForm, TestForm, QuestionForm, AnswerForm, studentRegForm
 from .models import User, Examiner, Test, Question, Answer
+from django.db.models import Q
 # Create your views here.
 
 questionArray = []
 
+def handleTime(t):
+    if t.minute > 1:
+        drtn = str(t.hour) + ":" + str(t.minute) + "mins."
+    elif t.minute == 1:
+        drtn = str(t.hour) + ":" + str(t.minute) + "min."
+    elif t.hour == 1 and t.minute == 0:
+        drtn = str(t.hour) + " hr"
+        
+    elif t.hour > 1 and t.minute == 0:
+        drtn = str(t.hour) + "hrs."
+        
+    return drtn
 
 def index(request):
     arr = []
@@ -21,6 +36,9 @@ def index(request):
         "tests":arr
     }    
     return render(request, 'core/index.html', context)
+
+def profile(request):
+    return render(request, 'core/profile.html')
 
 class RegisterExaminer(CreateView):
     model = User
@@ -36,6 +54,21 @@ class RegisterExaminer(CreateView):
         login(self.request, user)
         return redirect('dashboard')
 
+    
+class RegisterStudent(CreateView):
+    model = User
+    form_class = studentRegForm
+    template_name = 'auth/regStudent.html'
+    
+    def get_context_data(self, **kwargs):
+        kwargs['user_type'] = 'student'
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('profile')
+        
 def dashboard(request):
     testArr = []
     examiner = Examiner.objects.get(user=request.user)
@@ -52,13 +85,16 @@ def dashboard(request):
 
 def createTest(request):
     if request.method == 'POST':
-        form = TestForm(request.POST)
         examiner = Examiner.objects.get(user=request.user)
-        if form.is_valid:
+        form = TestForm(request.POST)
+
+        if form.is_valid():
             form.instance.examiner = examiner
             form.save()
-            return redirect('createQuestions', form.instance.id)
             
+            return redirect('createQuestions', form.instance.id)
+        else:
+            print(form.errors)
     context = {
         'form':TestForm
     }
@@ -85,7 +121,6 @@ def createAnswerView(request, id):
     ans = Answer.objects.filter(question=qn)
     test_id = qn.test.id
     ansArr = []
-    print("??????",test_id)
     if request.method == 'POST':
         
         form = AnswerForm(request.POST)
@@ -105,6 +140,14 @@ def createAnswerView(request, id):
     }
     return render(request, 'test/answer.html', context)
 
+def deleteTestView(request, id):
+    if request.user.is_examiner:
+        test = Test.objects.get(id=id)
+        test.delete()
+        return redirect('dashboard')
+    else:
+        return redirect('viewTest')
+
 def viewTest(request):
     context = {
         'questions':[]
@@ -119,20 +162,22 @@ def viewTest(request):
             cArr.append(a)
         
         context['questions'].append({t:cArr})
+    
     context["title"] = testObj.title
-    context["duration"] = testObj.duration
+    context["duration"] = handleTime(testObj.duration)
     context["description"] = testObj.description
     context["testID"] = testObj.id
 
     return render(request, 'core/viewTest.html', context)
 
 def TestStartView(request, title):
+    context = {}
     test = Test.objects.filter(title=title)
-    context = {
-
-    }
+    
     for t in test:
+        
         context['test'] = t
+        context['duration'] = handleTime(t.duration)
 
     return render(request, 'test/testStart.html', context)
 
@@ -142,6 +187,17 @@ def testing(request,title):
     }
     
     questions = Question.objects.filter(test__title=title)
+    
+    drtn = questions[0].test.duration
+
+    hrToMins = drtn.hour * 60
+    addMins = hrToMins + drtn.minute
+    start_time = datetime.now()
+    end_time = start_time + timedelta(minutes=addMins)
+
+    context["start"] = start_time.time()
+    context["end"] = end_time.time()
+    
     for q in questions:
         dArr = []
         answers = Answer.objects.filter(question__question_text = q.question_text)
@@ -195,6 +251,16 @@ def logoutView(request):
 	messages.info(request, "You have successfully logged out.") 
 	return redirect("home")
 
+def searchView(request):
+    arr = []
+    if request.method == 'POST':
+        searchTerm = request.POST["search"]
+        print(searchTerm)
+        test = Test.objects.filter(Q(subject=searchTerm) | Q(title=searchTerm))
+        for t in test:
+            arr.append(t)
+        return render(request, 'core/results.html', context={'tests':arr})
+
 def updateTest(request, id):
     test = Test.objects.get( id=id)
     form = TestForm(instance=test)
@@ -213,7 +279,6 @@ def updateTest(request, id):
 
 def updateQuestion(request, id):
     question = Question.objects.get(id=id)
-    print("<<<<<>>>>",question)
     form = QuestionForm(instance=question)
     if request.method == 'POST':
         f = QuestionForm(request.POST, instance=question)

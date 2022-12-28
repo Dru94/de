@@ -16,13 +16,23 @@ class Examiner(models.Model):
     
     def __str__(self) -> str:
         return self.user.username + " " + self.institution
-    
+
+class Student(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    first_name = models.CharField(max_length=30, null=True, default="")
+    last_name = models.CharField(max_length=30, null=True, default="")
+
+    def __str__(self) -> str:
+        return self.user.username + " " + self.institution
+
 
 class Test(models.Model):
     examiner = models.ForeignKey(Examiner, on_delete=models.CASCADE)
-    duration = models.PositiveIntegerField()
+    duration = models.TimeField()
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=300)
+    created = models.DateTimeField(auto_now_add=True, null=False)
+    subject = models.CharField(max_length=200, blank=False, default="")
     def __str__(self) -> str:
         return self.title + " " + self.description + " " + str(self.duration) + " " + self.examiner.first_name
     

@@ -1,3 +1,20 @@
+.topHeader{
+    padding: 30px;
+    text-align: center;
+    font-style: italic;
+    height: 150px;
+}
+.footer{
+    background-color: whitesmoke;
+}
+.srchDiv{
+    border-bottom-style:solid;
+    border-bottom-color: #6AB943;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
 .startTest{
     display: flex;
     flex-direction: column;
@@ -34,10 +51,14 @@
     display: flex;
     justify-content: space-between;
     padding: 10px;
+    background-color:;
+    border-bottom-style:solid;
+    border-bottom-color: coral;
 }
 .dashTestList{
     display: flex;
     justify-content: space-between;
+    padding-top:20px;
 }
 .addQuestion{
     padding: 30px;
@@ -166,4 +187,52 @@
     display: flex;
     justify-content: space-between;
     width: 865px;
+}
+.regWord{
+    height: 100px;
+    text-align: center;
+    padding: 10px;
+}
+.regButton{
+
+    display: flex;
+    justify-content: space-around;
+}
+.timeDiv{
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+}
+.timeDiv input{
+    width: 100px;
+}
+.descDiv{
+    width: 400px;
+}
+.testTitieDiv{
+    width: 400px;
+}
+.testSubjectDiv{
+    width: 400px;
+}
+.testingtimeDiv{
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+}
+.testEditDiv{
+    width: 10%;
+    display: flex;
+    justify-content: space-between;
+
+}
+.testEditDiv i{
+    color:gray;
+}
+.examinerRegCard{
+    background-color: coral;
+    padding: 10px;
 }

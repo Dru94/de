@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div style="padding:10px; text-decoration:underline;">
+                    <p>Search results</p>
+                </div>
+            </div>
+            {% for t in tests %}
+            <div class="col-md-6" style="padding-top:30px;">
+                <div class="list-group">
+                    <a href="{% url 'testStart' t.title %}" class="list-group-item list-group-item-action">
+                        <p style="font-weight:bold; font-size:30px"> {{t.title}} </p>
+                        <p><span style="font-style:italic;">Subject</span> <span style="font-weight:bold">{{t.subject}}</span></p>
+                        <p><span style="font-style:italic;">created by</span> <span style="font-weight:bold">{{t.examiner.user.username}}</span></p>
+                        <p><span style="font-style:italic;">created:</span> <span style="font-weight:bold">{{t.created.date}}</span></p>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock  %}
